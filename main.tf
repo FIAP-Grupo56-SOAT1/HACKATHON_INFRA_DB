@@ -10,7 +10,7 @@ terraform {
 
   backend "s3" {
     bucket = "bucket-fiap56-to-remote-state"
-    key    = "aws-rds-pagamento-fiap56/terraform.tfstate"
+    key    = "aws-rds-hackathon-fiap56/terraform.tfstate"
     region = "us-east-1"
   }
 }
@@ -92,7 +92,7 @@ resource "aws_db_instance" "msyql_rds" {
 }
 
 data "aws_secretsmanager_secret" "mysql" {
-  name = "prod/soat1grupo56/Pagamento"
+  name = "prod/soat1grupo56/Hackathon"
 }
 
 data "aws_secretsmanager_secret_version" "mysql_credentials" {
