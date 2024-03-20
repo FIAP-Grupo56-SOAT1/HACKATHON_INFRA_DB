@@ -31,7 +31,7 @@ variable "skip_final_snapshot" {
 }
 
 variable "identifier" {
-  default = "mysql-hackathon"
+  default = "mysql-timesheet"
 }
 
 variable "publicly_accessible" {
@@ -40,7 +40,7 @@ variable "publicly_accessible" {
 }
 
 variable "nome-db-servico" {
-  default = "hackathon"
+  default = "timesheet"
 }
 
 variable "engine" {
