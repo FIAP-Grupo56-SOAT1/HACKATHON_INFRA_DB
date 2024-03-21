@@ -92,7 +92,7 @@ resource "aws_db_instance" "msyql_rds" {
 }
 
 data "aws_secretsmanager_secret" "mysql" {
-  name = "prod/soat1grupo56/Hackathon"
+  name = "prod/soat1grupo56/Timesheet"
 }
 
 data "aws_secretsmanager_secret_version" "mysql_credentials" {
