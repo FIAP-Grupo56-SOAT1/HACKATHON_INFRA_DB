@@ -24,8 +24,8 @@ resource "aws_default_vpc" "default_vpc" {
 
 #create a security group for RDS Database Instance
 resource "aws_security_group" "rds_sg" {
-  vpc_id        = aws_default_vpc.default_vpc.id
-  name = "rds_bd_${var.nome-db-servico}_sg"
+  vpc_id = aws_default_vpc.default_vpc.id
+  name   = "rds_bd_${var.nome-db-servico}_sg"
   ingress {
     from_port   = 3306
     to_port     = 3306
@@ -60,35 +60,34 @@ resource "aws_default_subnet" "default_subnet_b" {
 #}
 
 resource "aws_db_subnet_group" "feasteats_db_subnet_group" {
-  name = "feasteats-${var.nome-db-servico}-db-subnet-group"
+  name       = "feasteats-${var.nome-db-servico}-db-subnet-group"
   #subnet_ids = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id, aws_default_subnet.default_subnet_c.id]
-  subnet_ids = [aws_default_subnet.default_subnet_a.id,aws_default_subnet.default_subnet_b.id]
-  tags = {
+  subnet_ids = [aws_default_subnet.default_subnet_a.id, aws_default_subnet.default_subnet_b.id]
+  tags       = {
     Name = "feasteats-${var.nome-db-servico}-db-subnet-group"
   }
 }
 
 
-
 resource "aws_db_instance" "msyql_rds" {
 
-  allocated_storage       = var.allocated_storage
-  storage_type            = var.storage_type
-  engine                  = var.engine
-  engine_version          = var.engine_version
-  instance_class          = var.instance_class
-  db_name                 = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["dbname"]
-  username                = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["username"]
-  password                = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["password"]
-  port                    = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["port"]
-  identifier              = var.identifier
+  allocated_storage        = var.allocated_storage
+  storage_type               = var.storage_type
+  engine                         = var.engine
+  engine_version            = var.engine_version
+  instance_class             = var.instance_class
+  db_name                     = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["dbname"]
+  username                    = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["username"]
+  password                    = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["password"]
+  port                             = jsondecode(data.aws_secretsmanager_secret_version.mysql_credentials.secret_string)["port"]
+  identifier                      = var.identifier
   parameter_group_name    = var.parameter_group_name
   db_subnet_group_name    = aws_db_subnet_group.feasteats_db_subnet_group.name
   skip_final_snapshot     = var.skip_final_snapshot
   publicly_accessible     = var.publicly_accessible
   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
   backup_retention_period = var.backup_retention_period
-  multi_az = false
+  multi_az                = false
 }
 
 data "aws_secretsmanager_secret" "mysql" {
