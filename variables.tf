@@ -31,11 +31,11 @@ variable "skip_final_snapshot" {
 }
 
 variable "identifier" {
-  default = "mysql-timesheet"
+  default = "timesheet"
 }
 
 variable "publicly_accessible" {
-  type = bool
+  type    = bool
   default = true
 }
 
